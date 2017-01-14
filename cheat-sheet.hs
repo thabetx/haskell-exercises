@@ -12,3 +12,9 @@ areWeThereYet distance speed
     where remainingTime = distance / speed
           short = 10
           long = 1000
+
+{-maybe-}
+safeLog :: (Floating a, Ord a) => a -> Maybe a
+safeLog x
+    | x > 0     = Just (log x)
+    | otherwise = Nothing
