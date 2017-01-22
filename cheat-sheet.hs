@@ -18,3 +18,7 @@ safeLog :: (Floating a, Ord a) => a -> Maybe a
 safeLog x
     | x > 0     = Just (log x)
     | otherwise = Nothing
+
+{-foldl-}
+grades :: School -> [Int]
+grades school = sort . nub $ foldl (\acc x -> acc ++ [fst x]) [] $ students school
