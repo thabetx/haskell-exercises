@@ -22,3 +22,8 @@ safeLog x
 {-foldl-}
 grades :: School -> [Int]
 grades school = sort . nub $ foldl (\acc x -> acc ++ [fst x]) [] $ students school
+
+{-pattern matching-}
+accumulate :: (a -> b) -> [a] -> [b]
+accumulate _ [] = []
+accumulate f (x:xs) = [f x] ++ accumulate f xs
