@@ -1,6 +1,7 @@
 module Scrabble (scoreLetter, scoreWord) where
 
 import Data.Char
+
 scoreLetter :: Char -> Int
 scoreLetter letter
     | elem x "AEIOULNRST" = 1
@@ -15,4 +16,4 @@ scoreLetter letter
       x = toUpper letter
 
 scoreWord :: String -> Int
-scoreWord word = foldl (\ acc x -> acc + scoreLetter x) 0 word
+scoreWord = sum . map scoreLetter
