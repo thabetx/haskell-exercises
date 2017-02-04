@@ -28,31 +28,31 @@ mkRobot :: Bearing -> (Integer, Integer) -> Robot
 mkRobot = Robot
 
 advance :: Bearing -> (Integer, Integer) -> (Integer, Integer)
-advance b (x, y)
-    | b == North = (x, y+1)
-    | b == East  = (x+1, y)
-    | b == South = (x, y-1)
-    | b == West  = (x-1, y)
+advance b (x, y) = case b of
+    North -> (x, y+1)
+    East  -> (x+1, y)
+    South -> (x, y-1)
+    West  -> (x-1, y)
 
 update :: Robot -> Char -> Robot
-update (Robot b c) command
-    | command == 'A' = mkRobot b $ advance b c
-    | command == 'L' = mkRobot (turnLeft b) c
-    | command == 'R' = mkRobot (turnRight b) c
+update (Robot b c) command = case command of
+    'A' ->  mkRobot b $ advance b c
+    'L' ->  mkRobot (turnLeft b) c
+    'R' ->  mkRobot (turnRight b) c
 
 simulate :: Robot -> String -> Robot
 simulate robot commands = foldl update robot commands
 
 turnLeft :: Bearing -> Bearing
-turnLeft b
-    | b == North = West
-    | b == West  = South
-    | b == South = East
-    | b == East  = North
+turnLeft b = case b of
+    North -> West
+    West  -> South
+    South -> East
+    East  -> North
 
 turnRight :: Bearing -> Bearing
-turnRight b
-    | b == North = East
-    | b == East  = South
-    | b == South = West
-    | b == West  = North
+turnRight b = case b of
+    North -> East
+    East  -> South
+    South -> West
+    West  -> North
