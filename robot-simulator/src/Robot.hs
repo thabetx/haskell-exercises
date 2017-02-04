@@ -27,23 +27,18 @@ coordinates = robotCoordinates
 mkRobot :: Bearing -> (Integer, Integer) -> Robot
 mkRobot = Robot
 
-advance :: Bearing -> (Integer, Integer)
-advance b
-    | b == North = (0, 1)
-    | b == East  = (1, 0)
-    | b == South = (0, -1)
-    | b == West  = (-1, 0)
-
-add :: (Integer, Integer) -> (Integer, Integer) -> (Integer, Integer)
-add a b = (fst a + fst b, snd a + snd b)
+advance :: Bearing -> (Integer, Integer) -> (Integer, Integer)
+advance b (x, y)
+    | b == North = (x, y+1)
+    | b == East  = (x+1, y)
+    | b == South = (x, y-1)
+    | b == West  = (x-1, y)
 
 update :: Robot -> Char -> Robot
-update robot command
-    | command == 'A' = mkRobot b $ add c $ advance b
+update (Robot b c) command
+    | command == 'A' = mkRobot b $ advance b c
     | command == 'L' = mkRobot (turnLeft b) c
-    | command == 'R' = mkRobot (turnRight b)c
-    where b = robotBearing robot
-          c = robotCoordinates robot
+    | command == 'R' = mkRobot (turnRight b) c
 
 simulate :: Robot -> String -> Robot
 simulate robot commands = foldl update robot commands
